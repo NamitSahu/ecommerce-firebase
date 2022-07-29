@@ -30,9 +30,11 @@ class CatalogScreen extends StatelessWidget {
             crossAxisCount: 2, childAspectRatio: 1.15),
         itemCount: categoryProducts.length,
         itemBuilder: (BuildContext context, int index) {
-          return ProductCard(
-            product: categoryProducts[index],
-            widthFactor: 2.2,
+          return Center(
+            child: ProductCard(
+              product: categoryProducts[index],
+              widthFactor: 2.2,
+            ),
           );
         },
       ),
