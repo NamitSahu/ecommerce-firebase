@@ -1,4 +1,3 @@
-import 'package:ecommerce_firebase/config/theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
