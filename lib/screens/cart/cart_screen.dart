@@ -44,7 +44,10 @@ class CartScreen extends StatelessWidget {
         ),
         body: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
           if (state is CartLoading) {
-            return const Center(child: CircularProgressIndicator(color: Colors.black,));
+            return const Center(
+                child: CircularProgressIndicator(
+              color: Colors.black,
+            ));
           }
           if (state is CartLoaded) {
             return Padding(
@@ -83,10 +86,21 @@ class CartScreen extends StatelessWidget {
                       SizedBox(
                         height: 400,
                         child: ListView.builder(
-                          itemCount: state.cart.products.length,
+                          itemCount: state.cart
+                              .productQuantity(state.cart.products)
+                              .keys
+                              .length,
                           itemBuilder: (context, index) {
                             return CartProductCard(
-                                product: state.cart.products[index]);
+                              product: state.cart
+                                  .productQuantity(state.cart.products)
+                                  .keys
+                                  .elementAt(index),
+                              quantity: state.cart
+                                  .productQuantity(state.cart.products)
+                                  .values
+                                  .elementAt(index),
+                            );
                           },
                         ),
                       ),

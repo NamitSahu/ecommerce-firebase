@@ -28,7 +28,7 @@ class EcommerceApp extends StatelessWidget {
         title: 'Ecommerce App',
         theme: theme(),
         onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: HomeScreen.routeName,
+        initialRoute: SplashScreen.routeName,
         home: const HomeScreen(),
         debugShowCheckedModeBanner: false,
       ),
