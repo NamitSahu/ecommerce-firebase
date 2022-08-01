@@ -3,6 +3,7 @@ import 'package:ecommerce_firebase/config/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'blocs/cart/cart_bloc.dart';
 import 'blocs/wishlist/wishlist_bloc.dart';
 import 'screens/screens.dart';
 
@@ -17,8 +18,11 @@ class EcommerceApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => WishlistBloc()..add(StartWishlist()),
-        )
+          create: (_) => WishlistBloc()..add(StartWishlist()),
+        ),
+        BlocProvider(
+          create: (_) => CartBloc()..add(LoadCart()),
+        ),
       ],
       child: MaterialApp(
         title: 'Ecommerce App',
