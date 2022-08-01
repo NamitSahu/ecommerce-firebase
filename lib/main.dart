@@ -1,5 +1,6 @@
 import 'package:ecommerce_firebase/config/app_router.dart';
 import 'package:ecommerce_firebase/config/theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,7 +8,12 @@ import 'blocs/cart/cart_bloc.dart';
 import 'blocs/wishlist/wishlist_bloc.dart';
 import 'screens/screens.dart';
 
-void main() => runApp(const EcommerceApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  // Bloc.observer = SimpleBlocObserver();
+  runApp(const EcommerceApp());
+}
 
 class EcommerceApp extends StatelessWidget {
   const EcommerceApp({Key? key}) : super(key: key);
