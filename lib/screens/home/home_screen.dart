@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/category/category_bloc.dart';
+import '../../blocs/product/product_bloc.dart';
 import '../../models/models.dart';
 import '../../widgets/widgets.dart';
 
@@ -25,24 +28,46 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-                // margin: EdgeInsets.only(top: 10.0),
-                child: CarouselSlider(
-              options: CarouselOptions(
-                  aspectRatio: 1.5,
-                  viewportFraction: 0.9,
-                  enlargeCenterPage: true,
-                  enableInfiniteScroll: true,
-                  enlargeStrategy: CenterPageEnlargeStrategy.height),
-              items: Category.categories
-                  .map((category) => HeroCarouselCard(category: category))
-                  .toList(),
-            )),
+            BlocBuilder<CategoryBloc, CategoryState>(
+              builder: (context, state) {
+                if (state is CategoryLoading) {
+                  return const Center(
+                      child: CircularProgressIndicator(color: Colors.black));
+                }
+                if (state is CategoryLoaded) {
+                  return CarouselSlider(
+                    options: CarouselOptions(
+                        aspectRatio: 1.5,
+                        viewportFraction: 0.9,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: true,
+                        enlargeStrategy: CenterPageEnlargeStrategy.height),
+                    items: state.categories
+                        .map((category) => HeroCarouselCard(category: category))
+                        .toList(),
+                  );
+                } else {
+                  return const Text("Something Went Wrong");
+                }
+              },
+            ),
             const SectionTitle(title: "RECOMMANDED"),
-            ProductCarousel(
-                products: Product.products
-                    .where((product) => product.isRecommended)
-                    .toList()),
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                if (state is ProductLoading) {
+                  return const Center(
+                      child: CircularProgressIndicator(color: Colors.black));
+                }
+                if (state is ProductLoaded) {
+                  return ProductCarousel(
+                      products: state.products
+                          .where((product) => product.isRecommended)
+                          .toList());
+                } else {
+                  return const Text("Something went wrong");
+                }
+              },
+            ),
             const SectionTitle(title: "MOST POPULAR"),
             ProductCarousel(
                 products: Product.products
