@@ -33,11 +33,14 @@ class CartScreen extends StatelessWidget {
                       Icons.share,
                       color: Colors.white,
                     )),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.white),
-                    onPressed: () {},
-                    child: Text("GO TO CHECKOUT",
-                        style: Theme.of(context).textTheme.headline3!)),
+                // ElevatedButton(
+                //     style: ElevatedButton.styleFrom(primary: Colors.white),
+                //     onPressed: () {
+                //       Navigator.pushNamed(context, '/checkout');
+                //     },
+                //     child: Text("GO TO CHECKOUT",
+                //         style: Theme.of(context).textTheme.headline3!)),
+                const CustomNavBar(screen: '/checkout')
               ],
             ),
           ),

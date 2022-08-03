@@ -18,7 +18,7 @@ class WishlistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Wishlist"),
+      appBar: const CustomAppBar(title: "Wishlist", automaticallyImplyLeading: true,),
       bottomNavigationBar: const CustomNavBar(screen: routeName),
       body: BlocBuilder<WishlistBloc, WishlistState>(
         builder: (context, state) {

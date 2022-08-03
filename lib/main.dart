@@ -9,12 +9,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/cart/cart_bloc.dart';
 import 'blocs/product/product_bloc.dart';
 import 'blocs/wishlist/wishlist_bloc.dart';
+import 'firebase_options.dart';
 import 'repositories/product/product_repository.dart';
 import 'screens/screens.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
   // Bloc.observer = SimpleBlocObserver();
   runApp(const EcommerceApp());
 }
@@ -34,12 +35,10 @@ class EcommerceApp extends StatelessWidget {
           create: (_) => CartBloc()..add(LoadCart()),
         ),
         BlocProvider(
-          create: (_) => CategoryBloc(categoryRepository: CategoryRepository())
-            ..add(LoadCategories()),
+          create: (_) => CategoryBloc(categoryRepository: CategoryRepository())..add(LoadCategories())
         ),
         BlocProvider(
-          create: (_) => ProductBloc(productRepository: ProductRepository())
-            ..add(LoadProducts()),
+          create: (_) => ProductBloc(productRepository: ProductRepository())..add(LoadProducts())
         ),
       ],
       child: MaterialApp(

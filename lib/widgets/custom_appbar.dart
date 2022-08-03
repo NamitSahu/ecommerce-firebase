@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
+  final bool automaticallyImplyLeading;
   const CustomAppBar({
     Key? key,
-    required this.title,
+    required this.title, this.automaticallyImplyLeading = true,
   }) : super(key: key);
 
   @override
@@ -13,13 +14,15 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
+      automaticallyImplyLeading: automaticallyImplyLeading,
       title: Container(
         color: Colors.black,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text(
-          title,
-          style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.white)
-        ),
+        child: Text(title,
+            style: Theme.of(context)
+                .textTheme
+                .headline2!
+                .copyWith(color: Colors.white)),
       ),
       iconTheme: const IconThemeData(color: Colors.black),
       actions: [

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/category/category_bloc.dart';
 import '../../blocs/product/product_bloc.dart';
-import '../../models/models.dart';
 import '../../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -31,10 +30,12 @@ class HomeScreen extends StatelessWidget {
             BlocBuilder<CategoryBloc, CategoryState>(
               builder: (context, state) {
                 if (state is CategoryLoading) {
+                  debugPrint('CategoryLoading...');
                   return const Center(
                       child: CircularProgressIndicator(color: Colors.black));
                 }
                 if (state is CategoryLoaded) {
+                  debugPrint('CategoryLoaded!');
                   return CarouselSlider(
                     options: CarouselOptions(
                         aspectRatio: 1.5,
@@ -56,23 +57,45 @@ class HomeScreen extends StatelessWidget {
               builder: (context, state) {
                 if (state is ProductLoading) {
                   return const Center(
-                      child: CircularProgressIndicator(color: Colors.black));
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ),
+                  );
                 }
                 if (state is ProductLoaded) {
                   return ProductCarousel(
-                      products: state.products
-                          .where((product) => product.isRecommended)
-                          .toList());
+                    products: state.products
+                        .where((product) => product.isRecommended)
+                        .toList(),
+                  );
                 } else {
-                  return const Text("Something went wrong");
+                  return const Text('Something went wrong.');
                 }
               },
             ),
             const SectionTitle(title: "MOST POPULAR"),
-            ProductCarousel(
-                products: Product.products
-                    .where((product) => product.isPopular)
-                    .toList()),
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                if (state is ProductLoading) {
+                  debugPrint('ProductLoading...');
+
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ),
+                  );
+                }
+                if (state is ProductLoaded) {
+                  debugPrint('ProductLoaded!');
+                  return ProductCarousel(
+                      products: state.products
+                          .where((product) => product.isPopular)
+                          .toList());
+                } else {
+                  return const Text("something went wrong");
+                }
+              },
+            ),
           ],
         ),
       ),

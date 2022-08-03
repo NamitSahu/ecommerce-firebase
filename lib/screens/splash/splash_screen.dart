@@ -19,7 +19,6 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 2), () => Navigator.pushNamedAndRemoveUntil(context, "/", ModalRoute.withName('/')));
     return Scaffold(
-      body: Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -44,7 +43,6 @@ class SplashScreen extends StatelessWidget {
             )
           ],
         ),
-      ),
     );
   }
 }

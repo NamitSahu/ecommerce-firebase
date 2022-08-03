@@ -6,13 +6,16 @@ import 'base_prodcut_repository.dart';
 class ProductRepository extends BaseProductReposirtory {
   final FirebaseFirestore _firebaseFirestore;
 
-  ProductRepository({ FirebaseFirestore? firebaseFirestore })
+  ProductRepository({FirebaseFirestore? firebaseFirestore})
       : _firebaseFirestore = firebaseFirestore ?? FirebaseFirestore.instance;
 
   @override
   Stream<List<Product>> getAllProducts() {
-    return _firebaseFirestore.collection('products').snapshots().map(
-        (snapshot) =>
-            snapshot.docs.map((doc) => Product.fromSnapshot(doc)).toList());
+    return _firebaseFirestore
+        .collection('products')
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) => Product.fromSnapshot(doc)).toList();
+    });
   }
 }

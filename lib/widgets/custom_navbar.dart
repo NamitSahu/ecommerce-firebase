@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../blocs/cart/cart_bloc.dart';
-import '../blocs/wishlist/wishlist_bloc.dart';
+import '../blocs/bloc.dart';
 import '../models/models.dart';
 
 class CustomNavBar extends StatelessWidget {
@@ -41,12 +40,13 @@ class CustomNavBar extends StatelessWidget {
         return _buildAddToCartNavBar(context, product);
       case '/cart':
         return _buildGoToCheckoutNavBar(context);
-      // case '/checkout':
-      //   return _buildOrderNowNavBar(context);
+      case '/checkout':
+        return _buildOrderNowNavBar(context);
 
       default:
         _buildNavBar(context);
     }
+    return null;
   }
 
   List<Widget> _buildNavBar(context) {
@@ -87,7 +87,8 @@ class CustomNavBar extends StatelessWidget {
             return IconButton(
               icon: const Icon(Icons.favorite, color: Colors.white),
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Added to your Wishlist!')));
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Added to your Wishlist!')));
                 context.read<WishlistBloc>().add(AddProductToWishlist(product));
               },
             );
@@ -126,7 +127,7 @@ class CustomNavBar extends StatelessWidget {
     return [
       ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/checkout');
+          Navigator.pushNamed(context, '/');
         },
         style: ElevatedButton.styleFrom(
           primary: Colors.white,
@@ -139,37 +140,55 @@ class CustomNavBar extends StatelessWidget {
       )
     ];
   }
+
+  List<Widget> _buildOrderNowNavBar(context) {
+    return [
+      ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/checkout');
+        },
+        style: ElevatedButton.styleFrom(
+          primary: Colors.white,
+          shape: const RoundedRectangleBorder(),
+        ),
+        child: Text(
+          'ORDER NOW',
+          style: Theme.of(context).textTheme.headline3,
+        ),
+      )
+    ];
+  }
 }
-//   List<Widget> _buildOrderNowNavBar(context) {
-//     return [
-//       BlocBuilder<CheckoutBloc, CheckoutState>(
-//         builder: (context, state) {
-//           if (state is CheckoutLoading) {
-//             return Center(
-//               child: CircularProgressIndicator(),
-//             );
-//           }
-//           if (state is CheckoutLoaded) {
-//             return ElevatedButton(
-//               onPressed: () {
-//                 context
-//                     .read<CheckoutBloc>()
-//                     .add(ConfirmCheckout(checkout: state.checkout));
-//               },
-//               style: ElevatedButton.styleFrom(
-//                 primary: Colors.white,
-//                 shape: RoundedRectangleBorder(),
-//               ),
-//               child: Text(
-//                 'ORDER NOW',
-//                 style: Theme.of(context).textTheme.headline3,
-//               ),
-//             );
-//           } else {
-//             return Text('Something went wrong');
-//           }
-//         },
-//       )
-//     ];
-//   }
+
+// List<Widget> _buildOrderNowNavBar(context) {
+//   return [
+//     BlocBuilder<CheckoutBloc, CheckoutState>(
+//       builder: (context, state) {
+//         if (state is CheckoutLoading) {
+//           return Center(
+//             child: CircularProgressIndicator(),
+//           );
+//         }
+//         if (state is CheckoutLoaded) {
+//           return ElevatedButton(
+//             onPressed: () {
+//               context
+//                   .read<CheckoutBloc>()
+//                   .add(ConfirmCheckout(checkout: state.checkout));
+//             },
+//             style: ElevatedButton.styleFrom(
+//               primary: Colors.white,
+//               shape: RoundedRectangleBorder(),
+//             ),
+//             child: Text(
+//               'ORDER NOW',
+//               style: Theme.of(context).textTheme.headline3,
+//             ),
+//           );
+//         } else {
+//           return Text('Something went wrong');
+//         }
+//       },
+//     )
+//   ];
 // }
