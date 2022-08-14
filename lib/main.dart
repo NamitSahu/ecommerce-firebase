@@ -1,3 +1,4 @@
+import 'package:ecommerce_firebase/blocs/bloc_observer.dart';
 import 'package:ecommerce_firebase/blocs/category/category_bloc.dart';
 import 'package:ecommerce_firebase/config/app_router.dart';
 import 'package:ecommerce_firebase/config/theme.dart';
@@ -17,7 +18,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
   // Bloc.observer = SimpleBlocObserver();
-  runApp(const EcommerceApp());
+  // ignore: deprecated_member_use
+  BlocOverrides.runZoned(
+    () => runApp(const EcommerceApp()),
+    blocObserver: MyBlocObserver()
+  );
+  
 }
 
 class EcommerceApp extends StatelessWidget {
